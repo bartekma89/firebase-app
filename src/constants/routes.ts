@@ -1,7 +1,10 @@
-export const LANDING = "/";
-export const SIGN_UP = "/signup";
-export const SIGN_IN = "/signin";
-export const HOME = "/home";
-export const ACCOUNT = "/account";
-export const ADMIN = "/admin";
-export const PASSWORD_FORGET = "/password-forget";
+export enum Routes {
+  LANDING = "/",
+  SIGN_UP = "/signup",
+  SIGN_IN = "/signin",
+  HOME = "/home",
+  ACCOUNT = "/account",
+  ADMIN = "/admin",
+  PASSWORD_FORGET = "/password-forget",
+  NO_MATCH = "*",
+}
