@@ -20,7 +20,7 @@ const initialValues: Values = {
   passwordTwo: "",
 };
 
-const validationSchema = yup.object().shape({
+const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
   userName: yup
     .string()
     .min(2, "Too Short!")

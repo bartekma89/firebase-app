@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import { useHistory } from "react-router-dom";
+import * as yup from "yup";
 
 import { useFirebaseContext } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
@@ -15,6 +16,11 @@ const initialValues: Values = {
   password: "",
 };
 
+const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Required"),
+  password: yup.string().required("Required"),
+});
+
 export default function SignInForm() {
   const [error, setError] = useState<{
     message: string | null;
@@ -26,6 +32,7 @@ export default function SignInForm() {
 
   const formik = useFormik({
     initialValues,
+    validationSchema,
     onSubmit: handleSubmit,
   });
 
