@@ -53,8 +53,8 @@ export default function SignUpForm() {
   ) {
     try {
       await firebaseContext.auth?.createUserWithEmailAndPassword(
-        formik.values.email,
-        formik.values.passwordOne
+        values.email,
+        values.passwordOne
       );
       resetForm();
       setSubmitting(false);
