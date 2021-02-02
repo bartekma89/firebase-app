@@ -1,16 +1,16 @@
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { Navigation } from "../../components/Navigation";
-import { Routes } from "../../constants/routes";
-import { AccountPage } from "../Account";
-import React from "react";
-import { LandingPage } from "../Landing";
-import { SignInPage } from "../SignIn";
-import { SignUpPage } from "../SignUp";
-import { PasswordForgetPage } from "../PasswordForget";
-import { HomePage } from "../Home";
-import { AdminPage } from "../Admin";
-import { NoMatchPage } from "../NoMatch";
+import { Navigation } from "./components/Navigation";
+import { Routes } from "./constants/routes";
+import { AccountPage } from "./screens/Account";
+import { LandingPage } from "./screens/Landing";
+import { SignInPage } from "./screens/SignIn";
+import { SignUpPage } from "./screens/SignUp";
+import { PasswordForgetPage } from "./screens/PasswordForget";
+import { HomePage } from "./screens/Home";
+import { AdminPage } from "./screens/Admin";
+import { NoMatchPage } from "./screens/NoMatch";
 
 export function App() {
   return (

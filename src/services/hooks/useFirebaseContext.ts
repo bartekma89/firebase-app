@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { FirebaseContext } from "../Firebase";
+import { FirebaseContext } from "../context";
 
 export const useFirebaseContext = () => {
   const firebaseContext = useContext(FirebaseContext);

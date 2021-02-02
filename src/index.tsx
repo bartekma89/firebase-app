@@ -1,8 +1,9 @@
 import ReactDOM from "react-dom";
 import React from "react";
 
-import { App } from "./screens/App";
-import { FirebaseContext, FirebaseInstance } from "./services/Firebase";
+import { App } from "./App";
+import { FirebaseInstance } from "./services/Firebase";
+import { FirebaseContext } from "./services/context";
 
 import reportWebVitals from "./reportWebVitals";
 
