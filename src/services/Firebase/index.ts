@@ -1,1 +1,1 @@
-export { default as FirebaseInstance } from "./FirebaseInstance";
+export { default as firebase } from "./firebase";

@@ -1,10 +1,15 @@
-import { useFirebaseContext } from "../../services/hooks";
+import { useAuthContext } from "../../services/hooks";
 
 export function SignOutButton() {
-  const firebaseContext = useFirebaseContext();
+  const authContext = useAuthContext();
 
   return (
-    <button type="button" onClick={() => firebaseContext.auth?.signOut()}>
+    <button
+      type="button"
+      onClick={() => {
+        authContext.doSignOut!();
+      }}
+    >
       Sin Out
     </button>
   );

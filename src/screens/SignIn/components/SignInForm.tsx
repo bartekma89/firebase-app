@@ -3,7 +3,7 @@ import { FormikHelpers, useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 
-import { useFirebaseContext } from "../../../services/hooks";
+import { useAuthContext } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
 
 interface Values {
@@ -27,7 +27,7 @@ export default function SignInForm() {
   }>({
     message: null,
   });
-  const firebaseContext = useFirebaseContext();
+  const authContext = useAuthContext();
   const history = useHistory();
 
   const formik = useFormik({
@@ -41,7 +41,7 @@ export default function SignInForm() {
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) {
     try {
-      await firebaseContext.auth?.signInWithEmailAndPassword(
+      await authContext.doSignInWithEmailAndPassword!(
         values.email,
         values.password
       );

@@ -1,2 +1,2 @@
-export { useFirebaseContext } from "./useFirebaseContext";
-export { useAuthContext } from "./useAuthContext";
+export { useAuthContext, AuthContext } from "./useAuthContext";
+export { useProvideAuth } from "./useProvideAuth";

@@ -3,7 +3,7 @@ import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 
-import { useFirebaseContext } from "../../../services/hooks";
+import { useAuthContext } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
 
 interface Values {
@@ -38,7 +38,7 @@ export default function SignUpForm() {
   const [error, setError] = useState<{ message: string | null }>({
     message: null,
   });
-  const firebaseContext = useFirebaseContext();
+  const authContext = useAuthContext();
   const history = useHistory();
 
   const formik = useFormik({
@@ -52,7 +52,7 @@ export default function SignUpForm() {
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) {
     try {
-      await firebaseContext.auth?.createUserWithEmailAndPassword(
+      await authContext.doSignUpWithEmailAndPassword!(
         values.email,
         values.passwordOne
       );
