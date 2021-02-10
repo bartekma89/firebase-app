@@ -36,6 +36,14 @@ export function useProvideAuth() {
       });
   };
 
+  const doPasswordReset = (email: string) => {
+    return firebase.auth().sendPasswordResetEmail(email);
+  };
+
+  const doPasswordUpdate = (email: string) => {
+    return firebase.auth().currentUser?.updatePassword(email);
+  };
+
   useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
@@ -51,5 +59,7 @@ export function useProvideAuth() {
     doSignInWithEmailAndPassword,
     doSignUpWithEmailAndPassword,
     doSignOut,
+    doPasswordReset,
+    doPasswordUpdate,
   };
 }

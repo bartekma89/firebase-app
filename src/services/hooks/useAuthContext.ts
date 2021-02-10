@@ -17,6 +17,8 @@ interface ContextProps {
     password: string
   ) => Promise<User>;
   doSignOut: () => Promise<void>;
+  doPasswordReset: (email: string) => Promise<void>;
+  doPasswordUpdate: (email: string) => Promise<void> | undefined;
 }
 
 export const AuthContext = createContext<Partial<ContextProps>>({});
