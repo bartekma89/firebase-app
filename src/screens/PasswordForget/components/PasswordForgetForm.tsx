@@ -53,6 +53,9 @@ export default function PasswordForgetForm() {
         placeholder="Email Address"
         value={formik.values.email}
       />
+      {formik.errors.email && formik.touched.email ? (
+        <div>{formik.errors.email}</div>
+      ) : null}
       <button type="submit" disabled={formik.isSubmitting}>
         Reset My Password
       </button>
