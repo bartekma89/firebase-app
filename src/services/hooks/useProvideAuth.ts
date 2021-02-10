@@ -36,6 +36,15 @@ export function useProvideAuth() {
       });
   };
 
+  useEffect(() => {
+    const listener = firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      user ? setUser(user) : setUser(null);
+    });
+
+    return () => listener();
+  }, []);
+
   return {
     user,
     loadingAuthState,

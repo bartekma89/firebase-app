@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 
 import { useProvideAuth, AuthContext } from "../../services/hooks";
 
 interface ComponentProps {
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export function ProvideAuth({ children }: ComponentProps) {
