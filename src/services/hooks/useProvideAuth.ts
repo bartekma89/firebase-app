@@ -38,8 +38,8 @@ export function useProvideAuth() {
 
   useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      user ? setUser(user) : setUser(null);
+      setUser(user);
+      setLoadingAuthState(false);
     });
 
     return () => listener();
