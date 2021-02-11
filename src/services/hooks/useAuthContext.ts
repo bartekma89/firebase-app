@@ -1,27 +1,6 @@
-import { useContext, createContext } from "react";
-import { firebase } from "../Firebase";
+import { useContext } from "react";
 
-type User = firebase.User | null;
-
-interface ContextProps {
-  user: User;
-  authenticated: boolean;
-  setUser: (user: User) => void;
-  loadingAuthState: boolean;
-  doSignInWithEmailAndPassword: (
-    email: string,
-    password: string
-  ) => Promise<User>;
-  doSignUpWithEmailAndPassword: (
-    email: string,
-    password: string
-  ) => Promise<User>;
-  doSignOut: () => Promise<void>;
-  doPasswordReset: (email: string) => Promise<void>;
-  doPasswordUpdate: (email: string) => Promise<void> | undefined;
-}
-
-export const AuthContext = createContext<Partial<ContextProps>>({});
+import { AuthContext } from "../context";
 
 export const useAuthContext = () => {
   const authContext = useContext(AuthContext);
