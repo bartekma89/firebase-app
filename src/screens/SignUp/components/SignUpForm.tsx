@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
-import { useHistory } from "react-router-dom";
 
-import { useAuthContext } from "../../../services/hooks";
+import { useAuthContext, useRouter } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
 
 interface Values {
@@ -39,7 +38,7 @@ export default function SignUpForm() {
     message: null,
   });
   const authContext = useAuthContext();
-  const history = useHistory();
+  const { history } = useRouter();
 
   const formik = useFormik({
     initialValues,

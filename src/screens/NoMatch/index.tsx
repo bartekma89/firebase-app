@@ -1,12 +1,12 @@
-import { useLocation } from "react-router-dom";
+import { useRouter } from "../../services/hooks/";
 
 export function NoMatchPage() {
-  const { pathname } = useLocation();
+  const { location } = useRouter();
 
   return (
     <div>
       <h3>
-        No match for <code>{pathname}</code>
+        No match for <code>{location.pathname}</code>
       </h3>
     </div>
   );
