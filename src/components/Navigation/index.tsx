@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { SignOutButton } from "../SignOutButton";
 import { Routes } from "../../constants/routes";
 
-import { useAuthContext } from "../../services/hooks/";
+import { useAuthenticationContext } from "../../services/hooks/";
 
 export function Navigation() {
-  const { user } = useAuthContext();
+  const { user } = useAuthenticationContext();
 
   return <div>{user ? <NavigationAuth /> : <NavigationNonAuth />}</div>;
 }

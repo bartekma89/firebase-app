@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 
-import { useAuthContext, useRouter } from "../../../services/hooks";
+import { useAuthenticationContext, useRouter } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
 
 interface Values {
@@ -37,7 +37,7 @@ export default function SignUpForm() {
   const [error, setError] = useState<{ message: string | null }>({
     message: null,
   });
-  const authContext = useAuthContext();
+  const authContext = useAuthenticationContext();
   const { history } = useRouter();
 
   const formik = useFormik({

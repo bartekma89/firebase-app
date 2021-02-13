@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 
-import { useAuthContext } from "../../services/hooks";
+import { useAuthenticationContext } from "../../services/hooks";
 
 interface Values {
   passwordOne: string;
@@ -26,7 +26,7 @@ export function PasswordChangeForm() {
   const [error, setError] = useState<{ message: string | null }>({
     message: null,
   });
-  const authContext = useAuthContext();
+  const authContext = useAuthenticationContext();
 
   const formik = useFormik({
     initialValues,

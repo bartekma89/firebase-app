@@ -1,3 +1,3 @@
-export { useAuthContext } from "./useAuthContext";
-export { useProvideAuth } from "./useProvideAuth";
+export { useAuthenticationContext } from "./useAuthenticationContext";
+export { useProvideAuthentication } from "./useProvideAuthentication";
 export { useRouter } from "./useRouter";

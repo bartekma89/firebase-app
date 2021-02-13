@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { firebase } from "../Firebase";
 
-export function useProvideAuth() {
+export function useProvideAuthentication() {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [loadingAuthState, setLoadingAuthState] = useState<boolean>(true);
 
