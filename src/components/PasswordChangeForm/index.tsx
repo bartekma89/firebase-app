@@ -34,14 +34,15 @@ export function PasswordChangeForm() {
     onSubmit: handleSubmit,
   });
 
-  async function handleSubmit(
+  function handleSubmit(
     values: Values,
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) {
     try {
-      await authContext.doPasswordUpdate!(values.passwordOne);
-      resetForm();
-      setSubmitting(false);
+      authContext.doPasswordUpdate!(values.passwordOne)?.then(() => {
+        resetForm();
+        setSubmitting(false);
+      });
     } catch (error) {
       setError(error);
     }
@@ -49,33 +50,38 @@ export function PasswordChangeForm() {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="passwordOne">New password</label>
-      <input
-        type="text"
-        name="passwordOne"
-        id="passwordOne"
-        onChange={formik.handleChange}
-        placeholder="New password"
-        value={formik.values.passwordOne}
-      />
-      {formik.errors.passwordOne && formik.touched.passwordOne ? (
-        <div>{formik.errors.passwordOne}</div>
-      ) : null}
-      <label htmlFor="passwordTwo">Confirm Password</label>
-      <input
-        type="text"
-        name="passwordTwo"
-        id="passwordTwo"
-        onChange={formik.handleChange}
-        placeholder="Confirmed Password"
-        value={formik.values.passwordTwo}
-      />
-      {formik.errors.passwordTwo && formik.touched.passwordTwo ? (
-        <div>{formik.errors.passwordTwo}</div>
-      ) : null}
+      <div>
+        <label htmlFor="passwordOne">New password</label>
+        <input
+          type="text"
+          name="passwordOne"
+          id="passwordOne"
+          onChange={formik.handleChange}
+          placeholder="New password"
+          value={formik.values.passwordOne}
+        />
+        {formik.errors.passwordOne && formik.touched.passwordOne ? (
+          <div>{formik.errors.passwordOne}</div>
+        ) : null}
+      </div>
+      <div>
+        <label htmlFor="passwordTwo">Confirm Password</label>
+        <input
+          type="text"
+          name="passwordTwo"
+          id="passwordTwo"
+          onChange={formik.handleChange}
+          placeholder="Confirmed Password"
+          value={formik.values.passwordTwo}
+        />
+        {formik.errors.passwordTwo && formik.touched.passwordTwo ? (
+          <div>{formik.errors.passwordTwo}</div>
+        ) : null}
+      </div>
       <button type="submit" disabled={formik.isSubmitting}>
         Reset My Password
       </button>
+
       <br />
       {error ? <div>{error.message}</div> : null}
     </form>

@@ -46,18 +46,19 @@ export default function SignUpForm() {
     onSubmit: handleSubmit,
   });
 
-  async function handleSubmit(
+  function handleSubmit(
     values: Values,
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) {
     try {
-      await authContext.doSignUpWithEmailAndPassword!(
+      authContext.doSignUpWithEmailAndPassword!(
         values.email,
         values.passwordOne
-      );
-      resetForm();
-      setSubmitting(false);
-      history.push(Routes.HOME);
+      ).then(() => {
+        resetForm();
+        setSubmitting(false);
+        history.push(Routes.HOME);
+      });
     } catch (error) {
       setError(error);
     }

@@ -32,7 +32,6 @@ export function useProvideAuthentication() {
       .signOut()
       .then(() => {
         setUser(null);
-        setLoadingAuthState(false);
       });
   };
 
@@ -56,6 +55,7 @@ export function useProvideAuthentication() {
   return {
     user,
     loadingAuthState,
+    authenticated: user !== null,
     doSignInWithEmailAndPassword,
     doSignUpWithEmailAndPassword,
     doSignOut,

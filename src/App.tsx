@@ -1,7 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { Navigation } from "./components/Navigation";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { PublicRoute } from "./components/PublicRoute";
 import { Routes } from "./constants/routes";
 import { AccountPage } from "./screens/Account";
 import { LandingPage } from "./screens/Landing";
@@ -18,30 +20,30 @@ export function App() {
       <Navigation />
       <hr />
       <Switch>
-        <Route exact path={Routes.LANDING}>
+        <PublicRoute exact path={Routes.LANDING}>
           <LandingPage />
-        </Route>
-        <Route path={Routes.SIGN_IN}>
+        </PublicRoute>
+        <PublicRoute restricted path={Routes.SIGN_IN}>
           <SignInPage />
-        </Route>
-        <Route path={Routes.SIGN_UP}>
+        </PublicRoute>
+        <PublicRoute restricted path={Routes.SIGN_UP}>
           <SignUpPage />
-        </Route>
-        <Route path={Routes.PASSWORD_FORGET}>
+        </PublicRoute>
+        <PublicRoute restricted path={Routes.PASSWORD_FORGET}>
           <PasswordForgetPage />
-        </Route>
-        <Route path={Routes.HOME}>
+        </PublicRoute>
+        <PrivateRoute path={Routes.HOME}>
           <HomePage />
-        </Route>
-        <Route path={Routes.ACCOUNT}>
+        </PrivateRoute>
+        <PrivateRoute path={Routes.ACCOUNT}>
           <AccountPage />
-        </Route>
-        <Route path={Routes.ADMIN}>
+        </PrivateRoute>
+        <PrivateRoute path={Routes.ADMIN}>
           <AdminPage />
-        </Route>
-        <Route path={Routes.NO_MATCH}>
+        </PrivateRoute>
+        <PublicRoute path={Routes.NO_MATCH}>
           <NoMatchPage />
-        </Route>
+        </PublicRoute>
       </Switch>
     </Router>
   );

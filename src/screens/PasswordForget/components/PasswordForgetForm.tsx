@@ -28,15 +28,16 @@ export default function PasswordForgetForm() {
     onSubmit: handleSubmit,
   });
 
-  async function handleSubmit(
+  function handleSubmit(
     values: Values,
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) {
     try {
-      await authContext.doPasswordReset!(values.email);
-      resetForm();
-      setSubmitting(false);
-      setError({ message: null });
+      authContext.doPasswordReset!(values.email).then(() => {
+        resetForm();
+        setSubmitting(false);
+        setError({ message: null });
+      });
     } catch (error) {
       setError(error);
     }
@@ -44,18 +45,20 @@ export default function PasswordForgetForm() {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="email">Email: </label>
-      <input
-        type="text"
-        name="email"
-        id="email"
-        onChange={formik.handleChange}
-        placeholder="Email Address"
-        value={formik.values.email}
-      />
-      {formik.errors.email && formik.touched.email ? (
-        <div>{formik.errors.email}</div>
-      ) : null}
+      <div>
+        <label htmlFor="email">Email: </label>
+        <input
+          type="text"
+          name="email"
+          id="email"
+          onChange={formik.handleChange}
+          placeholder="Email Address"
+          value={formik.values.email}
+        />
+        {formik.errors.email && formik.touched.email ? (
+          <div>{formik.errors.email}</div>
+        ) : null}
+      </div>
       <button type="submit" disabled={formik.isSubmitting}>
         Reset My Password
       </button>
