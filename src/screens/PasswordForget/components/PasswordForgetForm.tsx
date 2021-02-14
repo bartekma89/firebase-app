@@ -16,7 +16,7 @@ const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
   email: yup.string().email("Invalid email").required("Required"),
 });
 
-export default function PasswordForgetForm() {
+export function PasswordForgetForm() {
   const [error, setError] = useState<{ message: string | null }>({
     message: null,
   });

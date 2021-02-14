@@ -33,7 +33,7 @@ const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
     .required("Required"),
 });
 
-export default function SignUpForm() {
+export function SignUpForm() {
   const [error, setError] = useState<{ message: string | null }>({
     message: null,
   });

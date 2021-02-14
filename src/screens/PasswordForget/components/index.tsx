@@ -1,1 +1,1 @@
-export { default as PasswordForgetForm } from "./PasswordForgetForm";
+export { PasswordForgetForm } from "./PasswordForgetForm";

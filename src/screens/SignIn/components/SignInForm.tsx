@@ -21,7 +21,7 @@ const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
   password: yup.string().required("Required"),
 });
 
-export default function SignInForm() {
+export function SignInForm() {
   const [error, setError] = useState<{
     message: string | null;
   }>({

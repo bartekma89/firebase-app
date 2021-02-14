@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { Navigation } from "./components/Navigation";
-import { PrivateRoute } from "./components/PrivateRoute";
-import { PublicRoute } from "./components/PublicRoute";
+import { Navigation, PrivateRoute, PublicRoute } from "./components/";
 import { Routes } from "./constants/routes";
-import { AccountPage } from "./screens/Account";
-import { LandingPage } from "./screens/Landing";
-import { SignInPage } from "./screens/SignIn";
-import { SignUpPage } from "./screens/SignUp";
-import { PasswordForgetPage } from "./screens/PasswordForget";
-import { HomePage } from "./screens/Home";
-import { AdminPage } from "./screens/Admin";
-import { NoMatchPage } from "./screens/NoMatch";
+import {
+  AccountPage,
+  LandingPage,
+  SignInPage,
+  SignUpPage,
+  PasswordForgetPage,
+  HomePage,
+  AdminPage,
+  NoMatchPage,
+} from "./screens/";
 
 export function App() {
   return (

@@ -1,11 +1,11 @@
-import React from "react";
+import { ReactNode } from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import { useAuthenticationContext } from "../../services/hooks/";
 import { RoutesType } from "../../constants/types";
 
 interface ComponentProps {
-  children: React.ReactNode;
+  children: ReactNode;
   redirection?: string;
   exact?: boolean;
   path: RoutesType;
