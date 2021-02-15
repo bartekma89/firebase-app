@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { firebase } from "../Firebase";
 
 export function useProvideAuthentication() {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<firebase.User | null>(() => {
+    return localStorage.getItem("authUser") === null
+      ? null
+      : JSON.parse(localStorage.getItem("authUser") as string);
+  });
   const [loadingAuthState, setLoadingAuthState] = useState<boolean>(true);
 
   const doSignInWithEmailAndPassword = (email: string, password: string) => {
@@ -44,10 +48,17 @@ export function useProvideAuthentication() {
   };
 
   useEffect(() => {
-    const listener = firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
-      setLoadingAuthState(false);
-    });
+    const listener = firebase.auth().onAuthStateChanged(
+      (user) => {
+        setUser(user);
+        setLoadingAuthState(false);
+        localStorage.setItem("authUser", JSON.stringify(user));
+      },
+      () => {
+        localStorage.removeItem("authUser");
+        setUser(null);
+      }
+    );
 
     return () => listener();
   }, []);

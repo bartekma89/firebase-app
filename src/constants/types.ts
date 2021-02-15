@@ -11,3 +11,10 @@ export type RoutesType =
   | Routes.PASSWORD_FORGET
   | Routes.SIGN_IN
   | Routes.SIGN_UP;
+
+// interfaces
+export interface User {
+  username: string;
+  email: string;
+  uid: string;
+}

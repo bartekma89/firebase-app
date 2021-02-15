@@ -40,18 +40,16 @@ export function SignInForm() {
     values: Values,
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) {
-    try {
-      authContext.doSignInWithEmailAndPassword!(
-        values.email,
-        values.password
-      ).then(() => {
+    authContext.doSignInWithEmailAndPassword!(values.email, values.password)
+      .then(() => {
         resetForm();
-        setSubmitting(false);
+
         history.push(Routes.HOME);
+      })
+      .catch((error) => setError(error))
+      .finally(() => {
+        setSubmitting(false);
       });
-    } catch (error) {
-      setError(error);
-    }
   }
 
   return (

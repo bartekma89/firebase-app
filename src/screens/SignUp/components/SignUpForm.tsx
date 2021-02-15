@@ -4,23 +4,24 @@ import * as yup from "yup";
 
 import { useAuthenticationContext, useRouter } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
+import { useDbFirebase } from "../../../services/hooks";
 
 interface Values {
-  userName: string;
+  username: string;
   email: string;
   passwordOne: string;
   passwordTwo: string;
 }
 
 const initialValues: Values = {
-  userName: "",
+  username: "",
   email: "",
   passwordOne: "",
   passwordTwo: "",
 };
 
 const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
-  userName: yup
+  username: yup
     .string()
     .min(2, "Too Short!")
     .max(20, "Too Long!")
@@ -39,6 +40,7 @@ export function SignUpForm() {
   });
   const authContext = useAuthenticationContext();
   const { history } = useRouter();
+  const db = useDbFirebase();
 
   const formik = useFormik({
     initialValues,
@@ -50,34 +52,35 @@ export function SignUpForm() {
     values: Values,
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) {
-    try {
-      authContext.doSignUpWithEmailAndPassword!(
-        values.email,
-        values.passwordOne
-      ).then(() => {
+    authContext.doSignUpWithEmailAndPassword!(values.email, values.passwordOne)
+      .then((authUser) => {
+        return db
+          .user(authUser!.uid)
+          .set({ username: values.username, email: values.email });
+      })
+      .then(() => {
         resetForm();
-        setSubmitting(false);
+
         history.push(Routes.HOME);
-      });
-    } catch (error) {
-      setError(error);
-    }
+      })
+      .catch((error) => setError(error))
+      .finally(() => setSubmitting(false));
   }
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <div>
-        <label htmlFor="userName">User name: </label>
+        <label htmlFor="username">User name: </label>
         <input
           type="text"
-          name="userName"
-          id="userName"
+          name="username"
+          id="username"
           onChange={formik.handleChange}
           placeholder="Full Name"
-          value={formik.values.userName}
+          value={formik.values.username}
         />
-        {formik.errors.userName && formik.touched.userName ? (
-          <div>{formik.errors.userName}</div>
+        {formik.errors.username && formik.touched.username ? (
+          <div>{formik.errors.username}</div>
         ) : null}
       </div>
       <div>
