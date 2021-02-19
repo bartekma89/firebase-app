@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
+import { User } from "../../constants/types";
 
 import { firebase } from "../Firebase";
+import { useDbFirebase } from "./useDbFirebase";
 
-export function useProvideAuthentication() {
-  const [user, setUser] = useState<firebase.User | null>(() => {
+export function useProvideAuth() {
+  const [user, setUser] = useState<User | null>(() => {
     return localStorage.getItem("authUser") === null
       ? null
       : JSON.parse(localStorage.getItem("authUser") as string);
   });
   const [loadingAuthState, setLoadingAuthState] = useState<boolean>(true);
+  const dbUser = useDbFirebase();
 
   const doSignInWithEmailAndPassword = (email: string, password: string) => {
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
-        setUser(response.user);
         return response.user;
       });
   };
@@ -25,7 +27,6 @@ export function useProvideAuthentication() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        setUser(response.user);
         return response.user;
       });
   };
@@ -36,6 +37,7 @@ export function useProvideAuthentication() {
       .signOut()
       .then(() => {
         setUser(null);
+        localStorage.removeItem("authUser");
       });
   };
 
@@ -48,17 +50,28 @@ export function useProvideAuthentication() {
   };
 
   useEffect(() => {
-    const listener = firebase.auth().onAuthStateChanged(
-      (user) => {
-        setUser(user);
-        setLoadingAuthState(false);
-        localStorage.setItem("authUser", JSON.stringify(user));
-      },
-      () => {
+    const listener = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        let authUser = null;
+
+        dbUser
+          .user(user.uid)
+          .once("value")
+          .then((snapshot) => {
+            authUser = {
+              ...snapshot.val(),
+              uid: user.uid,
+            };
+
+            localStorage.setItem("authUser", JSON.stringify(authUser));
+            setUser(authUser);
+          });
+      } else {
         localStorage.removeItem("authUser");
         setUser(null);
       }
-    );
+      setLoadingAuthState(false);
+    });
 
     return () => listener();
   }, []);

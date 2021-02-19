@@ -2,15 +2,18 @@ import { useState } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 
-import { useAuthenticationContext, useRouter } from "../../../services/hooks";
+import { useAuthContext, useRouter } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
 import { useDbFirebase } from "../../../services/hooks";
+import { RolesTypes } from "../../../constants/types";
+import { Roles } from "../../../constants/roles";
 
 interface Values {
   username: string;
   email: string;
   passwordOne: string;
   passwordTwo: string;
+  isAdmin?: boolean;
 }
 
 const initialValues: Values = {
@@ -18,6 +21,7 @@ const initialValues: Values = {
   email: "",
   passwordOne: "",
   passwordTwo: "",
+  isAdmin: false,
 };
 
 const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
@@ -32,13 +36,14 @@ const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
     .string()
     .oneOf([yup.ref("passwordOne")], "Password's not match")
     .required("Required"),
+  isAdmin: yup.boolean().notRequired(),
 });
 
 export function SignUpForm() {
   const [error, setError] = useState<{ message: string | null }>({
     message: null,
   });
-  const authContext = useAuthenticationContext();
+  const authContext = useAuthContext();
   const { history } = useRouter();
   const db = useDbFirebase();
 
@@ -54,13 +59,14 @@ export function SignUpForm() {
   ) {
     authContext.doSignUpWithEmailAndPassword!(values.email, values.passwordOne)
       .then((authUser) => {
+        let role = values.isAdmin ? Roles.ADMIN : Roles.USER;
+
         return db
           .user(authUser!.uid)
-          .set({ username: values.username, email: values.email });
+          .set({ username: values.username, email: values.email, role });
       })
       .then(() => {
         resetForm();
-
         history.push(Routes.HOME);
       })
       .catch((error) => setError(error))
@@ -124,6 +130,16 @@ export function SignUpForm() {
         {formik.errors.passwordTwo && formik.touched.passwordTwo ? (
           <div>{formik.errors.passwordTwo}</div>
         ) : null}
+      </div>
+      <div>
+        <label htmlFor="isAdmin">Admin: </label>
+        <input
+          type="checkbox"
+          name="isAdmin"
+          id="isAdmin"
+          onChange={formik.handleChange}
+          checked={formik.values.isAdmin}
+        />
       </div>
       <div>
         <button type="submit" disabled={formik.isSubmitting}>

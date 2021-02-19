@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import { useAuthenticationContext } from "../../services/hooks/";
-import { RoutesType } from "../../constants/types";
+import { useAuthContext } from "../../services/hooks/";
+import { RoutesTypes } from "../../constants/types";
 
 interface ComponentProps {
   children: ReactNode;
   redirection?: string;
   exact?: boolean;
-  path: RoutesType;
+  path: RoutesTypes;
 }
 
 export function PrivateRoute({
@@ -16,7 +16,7 @@ export function PrivateRoute({
   redirection = "/signin",
   ...rest
 }: ComponentProps) {
-  const { loadingAuthState, authenticated } = useAuthenticationContext();
+  const { loadingAuthState, authenticated } = useAuthContext();
 
   if (loadingAuthState) {
     return (

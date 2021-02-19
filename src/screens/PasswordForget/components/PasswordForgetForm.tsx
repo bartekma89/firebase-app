@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 
-import { useAuthenticationContext } from "../../../services/hooks";
+import { useAuthContext } from "../../../services/hooks";
 
 interface Values {
   email: string;
@@ -20,7 +20,7 @@ export function PasswordForgetForm() {
   const [error, setError] = useState<{ message: string | null }>({
     message: null,
   });
-  const authContext = useAuthenticationContext();
+  const authContext = useAuthContext();
 
   const formik = useFormik({
     initialValues,

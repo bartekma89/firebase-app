@@ -1,7 +1,7 @@
-import { useAuthenticationContext } from "../../services/hooks";
+import { useAuthContext } from "../../services/hooks";
 
 export function SignOutButton() {
-  const authContext = useAuthenticationContext();
+  const authContext = useAuthContext();
 
   return (
     <button

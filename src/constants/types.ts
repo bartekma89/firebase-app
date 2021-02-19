@@ -1,8 +1,8 @@
+import { Roles } from "./roles";
 import { Routes } from "./routes";
 
-// enums
-
-export type RoutesType =
+// types
+export type RoutesTypes =
   | Routes.ACCOUNT
   | Routes.ADMIN
   | Routes.HOME
@@ -12,9 +12,12 @@ export type RoutesType =
   | Routes.SIGN_IN
   | Routes.SIGN_UP;
 
+export type RolesTypes = Roles.ADMIN | Roles.USER;
+
 // interfaces
 export interface User {
   username: string;
   email: string;
   uid: string;
+  role: RolesTypes;
 }

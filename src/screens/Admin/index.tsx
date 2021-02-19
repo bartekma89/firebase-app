@@ -1,8 +1,10 @@
 import { useEffect, useReducer, Reducer } from "react";
 
-import { useDbFirebase } from "../../services/hooks";
+import { useDbFirebase, useProvideAuth, useRouter } from "../../services/hooks";
 import { User } from "../../constants/types";
 import { UserList } from "./components";
+import { Roles } from "../../constants/roles";
+import { Routes } from "../../constants/routes";
 
 type StatusTypes = "idle" | "pending" | "resolved";
 type ActionTypes =
@@ -45,8 +47,9 @@ const usersReducer: Reducer<State, ActionTypes> = (state, action) => {
 
 export function AdminPage() {
   const [state, dispatch] = useReducer(usersReducer, initialState);
-
+  const { user } = useProvideAuth();
   const db = useDbFirebase();
+  const { history } = useRouter();
 
   const isLoading = state.status === "idle" || state.status === "pending";
   const isResolved = state.status === "resolved";
@@ -69,9 +72,16 @@ export function AdminPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (user?.role !== Roles.ADMIN) {
+      history.push(Routes.HOME);
+    }
+  }, [user?.role, history]);
+
   return (
     <div>
       <h1>Admin</h1>
+      <p>The Admin Page is accessible by every signed in admin user.</p>
       {isLoading && <div>Loading ...</div>}
       {isResolved && <UserList users={state.users} />}
     </div>

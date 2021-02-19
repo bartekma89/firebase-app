@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
+import { Roles } from "../../../constants/roles";
 
 import { Routes } from "../../../constants/routes";
+import { RolesTypes } from "../../../constants/types";
 import { SignOutButton } from "../../SignOutButton";
 
-export function NavigationAuth() {
+interface ComponentProps {
+  userRole: RolesTypes;
+}
+
+export function NavigationAuth({ userRole }: ComponentProps) {
   return (
     <ul>
       <li>
@@ -15,9 +21,11 @@ export function NavigationAuth() {
       <li>
         <Link to={Routes.ACCOUNT}>Account</Link>
       </li>
-      <li>
-        <Link to={Routes.ADMIN}>Admin</Link>
-      </li>
+      {userRole === Roles.ADMIN && (
+        <li>
+          <Link to={Routes.ADMIN}>Admin</Link>
+        </li>
+      )}
       <li>
         <SignOutButton />
       </li>

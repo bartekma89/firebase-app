@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
 import { Redirect, Route } from "react-router-dom";
 
-import { RoutesType } from "../../constants/types";
-import { useProvideAuthentication } from "../../services/hooks";
+import { RoutesTypes } from "../../constants/types";
+import { useProvideAuth } from "../../services/hooks";
 
 interface ComponentProps {
   children: ReactNode;
   redirection?: string;
   exact?: boolean;
-  path: RoutesType;
+  path: RoutesTypes;
   restricted?: boolean;
 }
 
@@ -18,7 +18,7 @@ export function PublicRoute({
   restricted = false,
   ...rest
 }: ComponentProps) {
-  const { loadingAuthState, authenticated } = useProvideAuthentication();
+  const { loadingAuthState, authenticated } = useProvideAuth();
 
   if (loadingAuthState) {
     return (

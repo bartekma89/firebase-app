@@ -1,8 +1,12 @@
-import { useAuthenticationContext } from "../../services/hooks/";
+import { useAuthContext } from "../../services/hooks/";
 import { NavigationAuth, NavigationNonAuth } from "./components/";
 
 export function Navigation() {
-  const { user } = useAuthenticationContext();
+  const { user } = useAuthContext();
 
-  return <div>{user ? <NavigationAuth /> : <NavigationNonAuth />}</div>;
+  return (
+    <div>
+      {user ? <NavigationAuth userRole={user.role} /> : <NavigationNonAuth />}
+    </div>
+  );
 }

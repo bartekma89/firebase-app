@@ -3,7 +3,7 @@ import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 
 import { useRouter } from "../../../services/hooks";
-import { useAuthenticationContext } from "../../../services/hooks";
+import { useAuthContext } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
 
 interface Values {
@@ -27,7 +27,7 @@ export function SignInForm() {
   }>({
     message: null,
   });
-  const authContext = useAuthenticationContext();
+  const authContext = useAuthContext();
   const { history } = useRouter();
 
   const formik = useFormik({
