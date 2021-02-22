@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useAuthContext, useRouter } from "../../../services/hooks";
 import { Routes } from "../../../constants/routes";
 import { useDbFirebase } from "../../../services/hooks";
-import { RolesTypes } from "../../../constants/types";
 import { Roles } from "../../../constants/roles";
 
 interface Values {

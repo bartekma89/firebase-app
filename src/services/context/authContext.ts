@@ -15,6 +15,7 @@ interface ContextProps {
     email: string,
     password: string
   ) => Promise<firebase.User | null>;
+  doSignInWithGoogle: () => Promise<firebase.auth.UserCredential>;
   doSignOut: () => Promise<void>;
   doPasswordReset: (email: string) => Promise<void>;
   doPasswordUpdate: (email: string) => Promise<void> | undefined;

@@ -7,9 +7,11 @@ export function HomePage() {
     <div>
       <h1>Home</h1>
       <p>You're logged in with React</p>
-      <p>
-        Your role is: <strong>{user?.role}</strong>.
-      </p>
+      {user?.role && (
+        <p>
+          Your role is: <strong>{user?.role}</strong>.
+        </p>
+      )}
       <p>This page can be accessed by all authenticated users.</p>
       <div>
         Current user:

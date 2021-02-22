@@ -4,6 +4,8 @@ import { User } from "../../constants/types";
 import { firebase } from "../Firebase";
 import { useDbFirebase } from "./useDbFirebase";
 
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 export function useProvideAuth() {
   const [user, setUser] = useState<User | null>(() => {
     return localStorage.getItem("authUser") === null
@@ -29,6 +31,10 @@ export function useProvideAuth() {
       .then((response) => {
         return response.user;
       });
+  };
+
+  const doSignInWithGoogle = () => {
+    return firebase.auth().signInWithPopup(googleProvider);
   };
 
   const doSignOut = () => {
@@ -85,5 +91,6 @@ export function useProvideAuth() {
     doSignOut,
     doPasswordReset,
     doPasswordUpdate,
+    doSignInWithGoogle,
   };
 }
