@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Roles } from "../../../constants/roles";
 import { Routes } from "../../../constants/routes";
 import {
   useDbFirebase,
@@ -19,6 +20,7 @@ export function SignInGoogle() {
         return db.user(socialAuthUser.user?.uid).set({
           username: socialAuthUser.user?.displayName,
           email: socialAuthUser.user?.email,
+          role: Roles.USER,
         });
       })
       .then(() => {

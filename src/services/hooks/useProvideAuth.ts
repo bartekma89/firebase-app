@@ -37,6 +37,12 @@ export function useProvideAuth() {
     return firebase.auth().signInWithPopup(googleProvider);
   };
 
+  const doSendEmailVarification = () => {
+    return firebase.auth().currentUser?.sendEmailVerification({
+      url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT as string,
+    });
+  };
+
   const doSignOut = () => {
     return firebase
       .auth()
@@ -65,8 +71,10 @@ export function useProvideAuth() {
           .once("value")
           .then((snapshot) => {
             authUser = {
-              ...snapshot.val(),
               uid: user.uid,
+              emailVerified: user.emailVerified,
+              providerData: user.providerData,
+              ...snapshot.val(),
             };
 
             localStorage.setItem("authUser", JSON.stringify(authUser));
@@ -92,5 +100,6 @@ export function useProvideAuth() {
     doPasswordReset,
     doPasswordUpdate,
     doSignInWithGoogle,
+    doSendEmailVarification,
   };
 }

@@ -65,6 +65,9 @@ export function SignUpForm() {
           .set({ username: values.username, email: values.email, role });
       })
       .then(() => {
+        authContext.doSendEmailVarification!();
+      })
+      .then(() => {
         resetForm();
         history.push(Routes.HOME);
       })

@@ -19,6 +19,7 @@ interface ContextProps {
   doSignOut: () => Promise<void>;
   doPasswordReset: (email: string) => Promise<void>;
   doPasswordUpdate: (email: string) => Promise<void> | undefined;
+  doSendEmailVarification: () => Promise<void> | undefined;
 }
 
 export const AuthContext = createContext<Partial<ContextProps>>({});

@@ -20,4 +20,6 @@ export interface User {
   email: string;
   uid: string;
   role: RolesTypes;
+  emailVerified: boolean;
+  providerData: any;
 }
