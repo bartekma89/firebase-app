@@ -8,11 +8,16 @@ import {
 } from "react-router-dom";
 import qs from "query-string";
 
-export function useRouter() {
-  const params = useParams();
-  const location = useLocation();
-  const history = useHistory();
-  const match = useRouteMatch();
+export function useRouter<
+  P = unknown,
+  L = unknown,
+  H = unknown,
+  M = unknown
+>() {
+  const params = useParams<P>();
+  const location = useLocation<L>();
+  const history = useHistory<H>();
+  const match = useRouteMatch<M>();
 
   return useMemo(() => {
     return {

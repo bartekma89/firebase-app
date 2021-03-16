@@ -5,6 +5,7 @@ export enum Routes {
   HOME = "/home",
   ACCOUNT = "/account",
   ADMIN = "/admin",
+  ADMIN_DETAILS = "/admin/:id",
   PASSWORD_FORGET = "/password-forget",
   NO_MATCH = "*",
 }

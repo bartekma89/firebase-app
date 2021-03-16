@@ -72,8 +72,8 @@ export function useProvideAuth() {
           .then((snapshot) => {
             authUser = {
               uid: user.uid,
-              emailVerified: user.emailVerified,
-              providerData: user.providerData,
+              // emailVerified: user.emailVerified,
+              // providerData: user.providerData,
               ...snapshot.val(),
             };
 
@@ -88,6 +88,7 @@ export function useProvideAuth() {
     });
 
     return () => listener();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
