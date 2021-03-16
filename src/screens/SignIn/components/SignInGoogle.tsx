@@ -3,18 +3,18 @@ import { Roles } from "../../../constants/roles";
 import { Routes } from "../../../constants/routes";
 import {
   useDbFirebase,
-  useProvideAuth,
+  useAuthContext,
   useRouter,
 } from "../../../services/hooks";
 
 export function SignInGoogle() {
   const [error, setError] = useState<string | null>();
-  const { doSignInWithGoogle } = useProvideAuth();
+  const { doSignInWithGoogle } = useAuthContext();
   const { history } = useRouter();
   const db = useDbFirebase();
 
   const handleSubmit = (e: any) => {
-    doSignInWithGoogle()
+    doSignInWithGoogle!()
       .then((socialAuthUser) => {
         console.log(socialAuthUser);
         return db.user(socialAuthUser.user?.uid).set({

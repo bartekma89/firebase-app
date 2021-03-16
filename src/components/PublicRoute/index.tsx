@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Redirect, Route } from "react-router-dom";
 
 import { RoutesTypes } from "../../constants/types";
-import { useProvideAuth } from "../../services/hooks";
+import { useAuthContext } from "../../services/hooks";
 
 interface ComponentProps {
   children: ReactNode;
@@ -18,7 +18,7 @@ export function PublicRoute({
   restricted = false,
   ...rest
 }: ComponentProps) {
-  const { loadingAuthState, authenticated } = useProvideAuth();
+  const { loadingAuthState, authenticated } = useAuthContext();
 
   if (loadingAuthState) {
     return (

@@ -1,7 +1,7 @@
-import { useProvideAuth } from "../../services/hooks";
+import { useAuthContext } from "../../services/hooks";
 
 export function HomePage() {
-  const { user } = useProvideAuth();
+  const { user } = useAuthContext();
 
   return (
     <div>

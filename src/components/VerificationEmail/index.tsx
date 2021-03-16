@@ -1,6 +1,6 @@
-import firebase from "firebase";
-import { User } from "../../constants/types";
-import { useProvideAuth } from "../../services/hooks";
+// import firebase from "firebase";
+// import { User } from "../../constants/types";
+// import { useAuthContext } from "../../services/hooks";
 
 // const needsEmailVerification = (authUser: User | null) =>
 //   !authUser?.emailVerified &&
@@ -9,7 +9,7 @@ import { useProvideAuth } from "../../services/hooks";
 //     .includes("password");
 
 export function VerificationEmail() {
-  const { user, doSendEmailVarification } = useProvideAuth();
+  // const { user, doSendEmailVarification } = useAuthContext();
 
   // return needsEmailVerification(user) ? (
   //   <div>

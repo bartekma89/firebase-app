@@ -4,7 +4,6 @@ import { Routes } from "../../../constants/routes";
 import { User } from "../../../constants/types";
 import {
   useDbFirebase,
-  useProvideAuth,
   useRouter,
   useAuthContext,
 } from "../../../services/hooks";

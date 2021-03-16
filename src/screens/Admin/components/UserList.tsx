@@ -6,7 +6,7 @@ import { Routes } from "../../../constants/routes";
 import { User } from "../../../constants/types";
 import {
   useDbFirebase,
-  useProvideAuth,
+  useAuthContext,
   useRouter,
 } from "../../../services/hooks";
 
@@ -63,7 +63,7 @@ const usersReducer: Reducer<State, ActionTypes> = (state, action) => {
 
 export function UserList() {
   const [state, dispatch] = useReducer(usersReducer, initialState);
-  const { user } = useProvideAuth();
+  const { user } = useAuthContext();
   const db = useDbFirebase();
   const { history } = useRouter();
 
