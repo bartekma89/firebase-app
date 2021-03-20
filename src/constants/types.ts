@@ -25,6 +25,7 @@ export interface User {
 }
 
 export interface Message {
-  text: string;
+  message: string;
   uid: string;
+  userId: string;
 }

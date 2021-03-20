@@ -1,9 +1,13 @@
 import { Message } from "../../../constants/types";
 
 interface ComponentProps {
-  message: Pick<Message, "text">;
+  message: Message;
 }
 
 export function MessageItem({ message }: ComponentProps) {
-  return <li>{message}</li>;
+  return (
+    <li>
+      <strong>{message.userId}:</strong> {message.message}
+    </li>
+  );
 }

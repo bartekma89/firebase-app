@@ -8,7 +8,7 @@ interface ComponetProps {
 export function MessageList({ messages }: ComponetProps) {
   return (
     <ul>
-      {messages.map((message: any) => (
+      {messages.map((message) => (
         <MessageItem key={message.uid} message={message} />
       ))}
     </ul>
