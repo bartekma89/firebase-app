@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 
@@ -70,11 +70,19 @@ export function Messages() {
       });
   }
 
+  const handleRemoveMessage = useCallback(
+    (uid: string) => db.message(uid).remove(),
+    [db]
+  );
+
   return (
     <div>
       {loading && <div>Loading...</div>}
       {messages ? (
-        <MessageList messages={messages} />
+        <MessageList
+          messages={messages}
+          onRemoveMessage={handleRemoveMessage}
+        />
       ) : (
         <div>There are no messages...</div>
       )}
