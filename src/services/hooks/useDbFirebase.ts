@@ -1,13 +1,18 @@
 import { firebase } from "../Firebase";
 
-export function useDbFirebase() {
-  const user = (uid: string | undefined) =>
-    firebase.database().ref(`users/${uid}`);
+const db = firebase.database();
 
-  const users = () => firebase.database().ref("users");
+export function useDbFirebase() {
+  const user = (uid: string | undefined) => db.ref(`users/${uid}`);
+  const users = () => db.ref("users");
+
+  const message = (uid: string) => db.ref(`message/${uid}`);
+  const messages = () => db.ref("messages");
 
   return {
     user,
     users,
+    message,
+    messages,
   };
 }

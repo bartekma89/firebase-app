@@ -1,4 +1,5 @@
 import { useAuthContext } from "../../services/hooks";
+import { Messages } from "../../components";
 
 export function HomePage() {
   const { user } = useAuthContext();
@@ -21,6 +22,7 @@ export function HomePage() {
           </ul>
         )}
       </div>
+      <Messages />
     </div>
   );
 }

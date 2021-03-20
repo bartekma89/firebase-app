@@ -23,3 +23,8 @@ export interface User {
   // emailVerified: boolean;
   // providerData: any;
 }
+
+export interface Message {
+  text: string;
+  uid: string;
+}

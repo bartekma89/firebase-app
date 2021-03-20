@@ -16,7 +16,6 @@ export function SignInGoogle() {
   const handleSubmit = (e: any) => {
     doSignInWithGoogle!()
       .then((socialAuthUser) => {
-        console.log(socialAuthUser);
         return db.user(socialAuthUser.user?.uid).set({
           username: socialAuthUser.user?.displayName,
           email: socialAuthUser.user?.email,
