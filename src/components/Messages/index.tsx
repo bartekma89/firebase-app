@@ -61,8 +61,9 @@ export function Messages() {
   ) {
     db.messages()
       .push({
-        message: values.text,
+        messageText: values.text,
         userId: authUser.uid,
+        createdAt: db.serverValue.TIMESTAMP,
       })
       .then(() => {
         resetForm();
@@ -75,6 +76,18 @@ export function Messages() {
     [db]
   );
 
+  const handleEditMessage = useCallback(
+    (message: Message, editedText: string) => {
+      const { uid, ...messageSnapshot } = message;
+      db.message(uid).set({
+        ...messageSnapshot,
+        messageText: editedText,
+        editedAt: db.serverValue.TIMESTAMP,
+      });
+    },
+    [db]
+  );
+
   return (
     <div>
       {loading && <div>Loading...</div>}
@@ -82,6 +95,7 @@ export function Messages() {
         <MessageList
           messages={messages}
           onRemoveMessage={handleRemoveMessage}
+          onEditMessage={handleEditMessage}
         />
       ) : (
         <div>There are no messages...</div>
@@ -91,7 +105,7 @@ export function Messages() {
         <div>
           <label htmlFor="text">Message: </label>
           <input
-            id="message"
+            id="text"
             type="text"
             name="text"
             value={formik.values.text}

@@ -25,7 +25,9 @@ export interface User {
 }
 
 export interface Message {
-  message: string;
+  messageText: string;
   uid: string;
   userId: string;
+  createdAt: Date;
+  editedAt?: Date;
 }

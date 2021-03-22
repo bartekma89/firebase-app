@@ -9,10 +9,13 @@ export function useDbFirebase() {
   const message = (uid: string) => db.ref(`messages/${uid}`);
   const messages = () => db.ref("messages");
 
+  const serverValue = firebase.database.ServerValue;
+
   return {
     user,
     users,
     message,
     messages,
+    serverValue,
   };
 }
