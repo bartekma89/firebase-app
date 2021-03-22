@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { Message } from "../../../constants/types";
+import { useAuthContext } from "../../../services/hooks";
 
 interface ComponentProps {
   message: Message;
@@ -27,6 +28,8 @@ export function MessageItem({
   onRemoveMessage,
   onEditMessage,
 }: ComponentProps) {
+  const { user: authUser } = useAuthContext();
+
   const { messageText, userId, uid } = message;
 
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -59,12 +62,16 @@ export function MessageItem({
             name="messageText"
             onChange={formik.handleChange}
           />
-          {editText && (
+          {authUser?.uid === message.userId && (
             <span>
-              <button type="submit">Save</button>
-              <button type="button" onClick={handleToggleEditMode}>
-                Reset
-              </button>
+              {editText && (
+                <span>
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={handleToggleEditMode}>
+                    Reset
+                  </button>
+                </span>
+              )}
             </span>
           )}
         </form>
@@ -74,14 +81,18 @@ export function MessageItem({
           {message?.editedAt && <span>Edited</span>}
         </span>
       )}
-      {!editMode && (
+      {authUser?.uid === message.userId && (
         <span>
-          <button type="button" onClick={handleToggleEditMode}>
-            Edit
-          </button>
-          <button type="button" onClick={() => onRemoveMessage(uid)}>
-            Delete
-          </button>
+          {!editMode && (
+            <span>
+              <button type="button" onClick={handleToggleEditMode}>
+                Edit
+              </button>
+              <button type="button" onClick={() => onRemoveMessage(uid)}>
+                Delete
+              </button>
+            </span>
+          )}
         </span>
       )}
     </li>
