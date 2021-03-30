@@ -3,7 +3,11 @@ import { FormikHelpers, useFormik } from "formik";
 import * as yup from "yup";
 
 import { MessageList } from "./components";
-import { useDbFirebase, useAuthContext } from "../../services/hooks";
+import {
+  useDbFirebase,
+  useAuthContext,
+  useAsyncState,
+} from "../../services/hooks";
 import { Message, User } from "../../constants/types";
 
 interface Values {
@@ -21,28 +25,38 @@ const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
 export function Messages() {
   const [loading, setLoading] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[] | null>(null);
+  const [limit, setLimit] = useAsyncState<number>(3);
 
   const db = useDbFirebase();
   const { user } = useAuthContext();
 
-  useEffect(() => {
+  const onListenForMessage = (limit: number) => {
     setLoading(true);
 
-    db.messages().on("value", (snapshot) => {
-      const messagesObject = snapshot.val();
-      if (messagesObject) {
-        const messagesList = Object.keys(messagesObject).map((key: string) => ({
-          ...messagesObject[key],
-          uid: key,
-        }));
-        setMessages(messagesList);
+    db.messages()
+      .orderByChild("createdAt")
+      .limitToLast(limit)
+      .on("value", (snapshot) => {
+        const messagesObject = snapshot.val();
+        if (messagesObject) {
+          const messagesList = Object.keys(messagesObject)
+            .map((key: string) => ({
+              ...messagesObject[key],
+              uid: key,
+            }))
+            .reverse();
+          setMessages(messagesList);
 
-        setLoading(false);
-      } else {
-        setMessages(null);
-        setLoading(false);
-      }
-    });
+          setLoading(false);
+        } else {
+          setMessages(null);
+          setLoading(false);
+        }
+      });
+  };
+
+  useEffect(() => {
+    onListenForMessage(limit);
 
     return () => db.messages().off();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,9 +102,16 @@ export function Messages() {
     [db]
   );
 
+  const handleNextPage = () => {
+    setLimit(limit + 3).then((value) => {
+      onListenForMessage(value);
+    });
+  };
+
   return (
     <div>
       {loading && <div>Loading...</div>}
+      {!loading && messages && <button onClick={handleNextPage}>More</button>}
       {messages ? (
         <MessageList
           messages={messages}
