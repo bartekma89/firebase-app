@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import { Message } from "../../../constants/types";
+import { Message, User } from "../../../constants/types";
 import { useAuthContext } from "../../../services/hooks";
 
 interface ComponentProps {
+  user: User | undefined;
   message: Message;
   onRemoveMessage: (uid: string) => void;
   onEditMessage: (message: Message, editText: string) => void;
@@ -24,13 +25,14 @@ const validationSchema: yup.SchemaOf<Values> = yup.object().shape({
 });
 
 export function MessageItem({
+  user,
   message,
   onRemoveMessage,
   onEditMessage,
 }: ComponentProps) {
   const { user: authUser } = useAuthContext();
 
-  const { messageText, userId, uid } = message;
+  const { messageText, uid } = message;
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editText, setEditText] = useState<string>(messageText);
@@ -77,7 +79,7 @@ export function MessageItem({
         </form>
       ) : (
         <span>
-          <strong>{userId}:</strong> {messageText}{" "}
+          <strong>{user?.username}:</strong> {messageText}{" "}
           {message?.editedAt && <span>Edited</span>}
         </span>
       )}

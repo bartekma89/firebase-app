@@ -26,6 +26,7 @@ export function Messages() {
   const [loading, setLoading] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[] | null>(null);
   const [limit, setLimit] = useAsyncState<number>(3);
+  const [users, setUsers] = useState<User[] | null>(null);
 
   const db = useDbFirebase();
   const { user } = useAuthContext();
@@ -59,6 +60,22 @@ export function Messages() {
     onListenForMessage(limit);
 
     return () => db.messages().off();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    db.users().once("value", (snapshot) => {
+      const usersObject = snapshot.val();
+      const usersList = Object.keys(usersObject).map((key) => ({
+        ...usersObject[key],
+        uid: key,
+      }));
+      setUsers(usersList);
+    });
+
+    return () => {
+      db.users().off();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -114,6 +131,7 @@ export function Messages() {
       {!loading && messages && <button onClick={handleNextPage}>More</button>}
       {messages ? (
         <MessageList
+          users={users}
           messages={messages}
           onRemoveMessage={handleRemoveMessage}
           onEditMessage={handleEditMessage}
